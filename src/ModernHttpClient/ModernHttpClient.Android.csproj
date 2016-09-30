@@ -58,12 +58,18 @@
     <Compile Include="CaptiveNetworkException.cs" />
     <Compile Include="Android\NativeCookieHandler.cs" />
     <Reference Include="Square.OkIO">
-      <HintPath>..\..\packages\Square.OkIO.1.5.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
+      <HintPath>\tmp\nuget\Square.OkIO.1.6.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
     </Reference>
     <None Include="packages.config" />
-    <Reference Include="Square.OkHttp">
-      <HintPath>..\..\packages\Square.OkHttp.2.4.0.3\lib\MonoAndroid\Square.OkHttp.dll</HintPath>
+    <Reference Include="Square.OkHttp3">
+      <HintPath>\tmp\nuget\Square.OkHttp3.3.4.1.0\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="ModernHttpClient.Portable.csproj">
+      <Project>{6DD98593-4498-463D-B16E-F6CC5A928B79}</Project>
+      <Name>ModernHttpClient.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
