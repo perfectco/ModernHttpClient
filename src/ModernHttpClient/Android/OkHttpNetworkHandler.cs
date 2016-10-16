@@ -187,12 +187,12 @@ namespace ModernHttpClient
 
             public void OnResponse(Response p0)
             {
-                tcs.TrySetResult(p0);
+                tcs.TrySetResult (p0);
             }
 
 			public void OnResponse (ICall call, Response response)
 			{
-				throw new NotImplementedException ();
+				tcs.TrySetResult (response);
 			}
 		}
     }
