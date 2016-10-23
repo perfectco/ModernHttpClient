@@ -57,12 +57,12 @@
     <Compile Include="Utility.cs" />
     <Compile Include="CaptiveNetworkException.cs" />
     <Compile Include="Android\NativeCookieHandler.cs" />
-    <Reference Include="Square.OkIO">
-      <HintPath>\tmp\nuget\Square.OkIO.1.6.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
-    </Reference>
     <None Include="packages.config" />
     <Reference Include="Square.OkHttp3">
-      <HintPath>\tmp\nuget\Square.OkHttp3.3.4.1.0\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
+      <HintPath>\tmp\nuget\Square.OkHttp3.3.4.1.1\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
+    </Reference>
+    <Reference Include="Square.OkIO">
+      <HintPath>\tmp\nuget\Square.OkIO.1.10.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
