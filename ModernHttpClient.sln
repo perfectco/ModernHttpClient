@@ -128,8 +128,10 @@ Global
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
 		$1.ResourceNamePolicy = FileFormatDefault
 		$0.TextStylePolicy = $2
-		$2.inheritsSet = null
-		$2.scope = text/x-csharp
+		$2.inheritsSet = VisualStudio
+		$2.scope = text/plain
+		$2.FileWidth = 120
+		$2.inheritsScope = text/plain
 		$0.CSharpFormattingPolicy = $3
 		$3.AutoPropertyFormatting = ForceOneLine
 		$3.IndentPreprocessorDirectives = False

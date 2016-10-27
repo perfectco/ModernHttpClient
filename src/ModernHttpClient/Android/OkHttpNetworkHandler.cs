@@ -273,13 +273,14 @@ namespace ModernHttpClient
         /// <param name="session"></param>
         static bool verifyClientCiphers(string hostname, ISSLSession session)
         {
-            var callback = ServicePointManager.ClientCipherSuitesCallback;
-            if (callback == null) return true;
+            return true; // https://github.com/paulcbetts/ModernHttpClient/issues/216
+            //var callback = ServicePointManager.ClientCipherSuitesCallback;
+            //if (callback == null) return true;
 
-            var protocol = session.Protocol.StartsWith("SSL", StringComparison.InvariantCulture) ? SecurityProtocolType.Ssl3 : SecurityProtocolType.Tls;
-            var acceptedCiphers = callback(protocol, new[] { session.CipherSuite });
+            //var protocol = session.Protocol.StartsWith("SSL", StringComparison.InvariantCulture) ? SecurityProtocolType.Ssl3 : SecurityProtocolType.Tls;
+            //var acceptedCiphers = callback(protocol, new[] { session.CipherSuite });
 
-            return acceptedCiphers.Contains(session.CipherSuite);
+            //return acceptedCiphers.Contains(session.CipherSuite);
         }
     }
 }
