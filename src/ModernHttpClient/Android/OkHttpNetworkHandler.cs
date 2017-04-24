@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Square.OkHttp;
+using Square.OkHttp3;
 using Javax.Net.Ssl;
 using System.Text.RegularExpressions;
 using Java.IO;
@@ -17,8 +17,8 @@ namespace ModernHttpClient
 {
     public class NativeMessageHandler : HttpClientHandler
     {
-        readonly OkHttpClient client = new OkHttpClient();
-        readonly CacheControl noCacheCacheControl = default(CacheControl);
+        readonly OkHttpClient client;
+        readonly CacheControl noCacheCacheControl;
         readonly bool throwOnCaptiveNetwork;
 
         readonly Dictionary<HttpRequestMessage, WeakReference> registeredProgressCallbacks =
@@ -34,9 +34,16 @@ namespace ModernHttpClient
 
         public NativeMessageHandler(bool throwOnCaptiveNetwork, bool customSSLVerification, NativeCookieHandler cookieHandler = null)
         {
+            var builder = new OkHttpClient.Builder ();
+
             this.throwOnCaptiveNetwork = throwOnCaptiveNetwork;
 
-            if (customSSLVerification) client.SetHostnameVerifier(new HostnameVerifier());
+            if (customSSLVerification) 
+            {
+                builder.HostnameVerifier (new HostnameVerifier ());
+            }
+
+            client = builder.Build ();
             noCacheCacheControl = (new CacheControl.Builder()).NoCache().Build();
         }
 
@@ -120,16 +127,16 @@ namespace ModernHttpClient
             try {
                 resp = await call.EnqueueAsync().ConfigureAwait(false);
                 var newReq = resp.Request();
-                var newUri = newReq == null ? null : newReq.Uri();
+                var newUri = newReq == null ? null : newReq.Url();
                 request.RequestUri = new Uri(newUri.ToString());
                 if (throwOnCaptiveNetwork && newUri != null) {
-                    if (url.Host != newUri.Host) {
+                    if (url.Host != newUri.Host()) {
                         throw new CaptiveNetworkException(new Uri(java_uri), new Uri(newUri.ToString()));
                     }
                 }
             } catch (IOException ex) {
                 if (ex.Message.ToLowerInvariant().Contains("canceled")) {
-                    throw new OperationCanceledException();
+                    throw new System.OperationCanceledException();
                 }
 
                 throw;
@@ -162,7 +169,7 @@ namespace ModernHttpClient
 
     public static class AwaitableOkHttp
     {
-        public static Task<Response> EnqueueAsync(this Call This)
+        public static Task<Response> EnqueueAsync(this ICall This)
         {
             var cb = new OkTaskCallback();
             This.Enqueue(cb);
@@ -175,19 +182,22 @@ namespace ModernHttpClient
             readonly TaskCompletionSource<Response> tcs = new TaskCompletionSource<Response>();
             public Task<Response> Task { get { return tcs.Task; } }
 
-            public void OnFailure(Request p0, Java.IO.IOException p1)
+            public void OnFailure (ICall p0, IOException p1)
             {
                 // Kind of a hack, but the simplest way to find out that server cert. validation failed
-                if (p1.Message == String.Format("Hostname '{0}' was not verified", p0.Url().Host)) {
-                    tcs.TrySetException(new WebException(p1.LocalizedMessage, WebExceptionStatus.TrustFailure));
-                } else {
+                if (p1.Message == string.Format("Hostname '{0}' was not verified", p0.Request().Url().Host())) 
+                {
+                    tcs.TrySetException(new WebException (p1.LocalizedMessage, WebExceptionStatus.TrustFailure));
+                } 
+                else 
+                {
                     tcs.TrySetException(p1);
                 }
             }
 
-            public void OnResponse(Response p0)
+            public void OnResponse (ICall p0, Response p1)
             {
-                tcs.TrySetResult(p0);
+                tcs.TrySetResult(p1);
             }
         }
     }
@@ -270,6 +280,9 @@ namespace ModernHttpClient
         /// <param name="session"></param>
         static bool verifyClientCiphers(string hostname, ISSLSession session)
         {
+            //This API has been deprecated by Xamarin & Mono
+            return true;
+            /*
             var callback = ServicePointManager.ClientCipherSuitesCallback;
             if (callback == null) return true;
 
@@ -277,6 +290,7 @@ namespace ModernHttpClient
             var acceptedCiphers = callback(protocol, new[] { session.CipherSuite });
 
             return acceptedCiphers.Contains(session.CipherSuite);
+            */
         }
     }
 }
