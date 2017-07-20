@@ -12,6 +12,7 @@ using Java.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
 using Android.OS;
+using Java.Util.Concurrent;
 
 namespace ModernHttpClient
 {
@@ -32,7 +33,9 @@ namespace ModernHttpClient
 
         public NativeMessageHandler() : this(false, false) {}
 
-        public NativeMessageHandler(bool throwOnCaptiveNetwork, bool customSSLVerification, NativeCookieHandler cookieHandler = null)
+        public NativeMessageHandler(int connectTimeout, int readTimeout, int writeTimeout) : this(false, false, connectTimeout, readTimeout, writeTimeout) {}
+
+        public NativeMessageHandler(bool throwOnCaptiveNetwork, bool customSSLVerification, int connectTimeout = 10_000, int readTimeout = 10_000, int writeTimeout = 10_000, NativeCookieHandler cookieHandler = null)
         {
             var builder = new OkHttpClient.Builder ();
 
@@ -42,6 +45,10 @@ namespace ModernHttpClient
             {
                 builder.HostnameVerifier (new HostnameVerifier ());
             }
+
+            builder.ConnectTimeout (connectTimeout, TimeUnit.Milliseconds);
+            builder.ReadTimeout (readTimeout, TimeUnit.Milliseconds);
+            builder.WriteTimeout (writeTimeout, TimeUnit.Milliseconds);
 
             client = builder.Build ();
             noCacheCacheControl = (new CacheControl.Builder()).NoCache().Build();
