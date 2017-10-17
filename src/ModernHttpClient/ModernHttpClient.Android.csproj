@@ -45,7 +45,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\AutomatedTest</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <AssemblyName>ModernHttpClient.Android</AssemblyName>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
