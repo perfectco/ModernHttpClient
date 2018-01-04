@@ -13,6 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
 using Android.OS;
 using Java.Util.Concurrent;
+using Java.Interop;
 
 namespace ModernHttpClient
 {
@@ -56,12 +57,18 @@ namespace ModernHttpClient
 			var trustManagerFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm);
 			trustManagerFactory.Init((Java.Security.KeyStore) null);
 			var trustManagers = trustManagerFactory.GetTrustManagers();
-			if (trustManagers.Length != 1 || !(trustManagers[0] is IX509TrustManager trustManager))
+
+            if (trustManagers.Length != 1)// || !(trustManagers[0] is IX509TrustManager trustManager))
 			{
 				throw new Java.Lang.IllegalStateException($"Unexpected default trust managers: {trustManagers.ToString()}");
 			}
-			builder.SslSocketFactory(new ImprovedSSLSocketFactory(), trustManager);
-
+            var trustManager = trustManagers [0].JavaCast<IX509TrustManager> ();
+			if(trustManager == null)
+			{
+				throw new Java.Lang.IllegalStateException($"Unexpected default trust managers: {trustManagers.ToString()}");
+			}
+            builder.SslSocketFactory(new ImprovedSSLSocketFactory(), trustManager);
+			
 			client = builder.Build();
 			noCacheCacheControl = (new CacheControl.Builder()).NoCache().Build();
 		}
