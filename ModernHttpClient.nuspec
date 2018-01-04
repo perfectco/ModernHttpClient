@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <version>3.2.0</version>
+    <version>3.2.1</version>
     <authors>Ideine</authors>
     <owners>Julien Mialon</owners>
     <licenseUrl>https://github.com/Ideine/ModernHttpClient/blob/master/COPYING</licenseUrl>
@@ -14,7 +14,7 @@
     <copyright>Copyright Paul Betts © 2012</copyright>
     <dependencies>
       <group targetFramework="MonoAndroid">
-        <dependency id="Square.OkHttp3" version="3.5.0" />
+        <dependency id="Square.OkHttp3" version="3.8.1" />
       </group>
     </dependencies>
   </metadata>
