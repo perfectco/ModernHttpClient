@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <version>3.2.1</version>
+    <version>3.2.2</version>
     <authors>Ideine</authors>
     <owners>Julien Mialon</owners>
     <licenseUrl>https://github.com/Ideine/ModernHttpClient/blob/master/COPYING</licenseUrl>
@@ -9,7 +9,7 @@
     <id>Ideine.ModernHttpClient</id>
     <title>Ideine - ModernHttpClient</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Write your app using System.Net.Http, but drop this library in and it will go drastically faster.</description>
+    <description>Write your app using System.Net.Http, but drop this library in and it will go drastically faster. Use Okhttp3 instead of Okhttp</description>
     <summary>Write your app using System.Net.Http, but drop this library in and it will go drastically faster.</summary>
     <copyright>Copyright Paul Betts © 2012</copyright>
     <dependencies>
