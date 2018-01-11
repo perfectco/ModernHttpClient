@@ -25,20 +25,32 @@ namespace androidtest
 
             button.Click += delegate { button.Text = $"{count++} clicks!"; Run (); };
 
-            //Run();
+            Run();
         }
 
         private async void Run()
         {
             HttpClient client = new HttpClient (new NativeMessageHandler());
 
-            HttpResponseMessage result = await client.GetAsync ("https://qwartz92.altima.fr/api/navigation/v1/getnavigation");
+            string [] urls = new string[]{"http://perdu.com/", "https://qwartz92.altima.fr/api/navigation/v1/getnavigation", "https://www.afpa.fr/", "https://www.filemaker.com/"};
+            
+            foreach (string url in urls)
+            {
+                try
+                {
+                    HttpResponseMessage result = await client.GetAsync (url);
 
-            var statusCode = result.StatusCode;
+                    var statusCode = result.StatusCode;
 
-            string content = await result.Content.ReadAsStringAsync ();
+                    string content = await result.Content.ReadAsStringAsync ();
 
-            Console.WriteLine ($"{statusCode} : {content}");
+                    System.Diagnostics.Debug.WriteLine ($"{statusCode} : {content.Length} : {url}");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex);
+                }
+            }
         }
     }
 }

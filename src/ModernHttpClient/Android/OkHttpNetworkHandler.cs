@@ -53,26 +53,12 @@ namespace ModernHttpClient
 			builder.ReadTimeout(readTimeout, TimeUnit.Milliseconds);
 			builder.WriteTimeout(writeTimeout, TimeUnit.Milliseconds);
 
-			//Creation of X509TrustManager : https://square.github.io/okhttp/3.x/okhttp/okhttp3/OkHttpClient.Builder.html#sslSocketFactory-javax.net.ssl.SSLSocketFactory-javax.net.ssl.X509TrustManager-
-			var trustManagerFactory = TrustManagerFactory.GetInstance(TrustManagerFactory.DefaultAlgorithm);
-			trustManagerFactory.Init((Java.Security.KeyStore) null);
-			var trustManagers = trustManagerFactory.GetTrustManagers();
-
-            if (trustManagers.Length != 1)// || !(trustManagers[0] is IX509TrustManager trustManager))
-			{
-				throw new Java.Lang.IllegalStateException($"Unexpected default trust managers: {trustManagers.ToString()}");
-			}
-            var trustManager = trustManagers [0].JavaCast<IX509TrustManager> ();
-			if(trustManager == null)
-			{
-				throw new Java.Lang.IllegalStateException($"Unexpected default trust managers: {trustManagers.ToString()}");
-			}
-            builder.SslSocketFactory(new ImprovedSSLSocketFactory(), trustManager);
+			builder.EnableTls12OnPreLollipopDevices();
 			
 			client = builder.Build();
 			noCacheCacheControl = (new CacheControl.Builder()).NoCache().Build();
 		}
-
+		
 		public void RegisterForProgress(HttpRequestMessage request, ProgressDelegate callback)
 		{
 			if (callback == null && registeredProgressCallbacks.ContainsKey(request))
