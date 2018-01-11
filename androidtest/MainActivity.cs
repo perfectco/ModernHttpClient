@@ -32,7 +32,7 @@ namespace androidtest
         {
             HttpClient client = new HttpClient (new NativeMessageHandler());
 
-            string [] urls = new string[]{"http://perdu.com/", "https://qwartz92.altima.fr/api/navigation/v1/getnavigation", "https://www.afpa.fr/", "https://www.filemaker.com/"};
+            string [] urls = new string[]{"http://perdu.com/", "https://www.afpa.fr/", "https://www.filemaker.com/"};
             
             foreach (string url in urls)
             {
