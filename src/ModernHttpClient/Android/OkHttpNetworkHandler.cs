@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Square.OkHttp;
+using Square.OkHttp3;
 using Javax.Net.Ssl;
 using System.Text.RegularExpressions;
 using Java.IO;
@@ -36,7 +36,7 @@ namespace ModernHttpClient
         {
             this.throwOnCaptiveNetwork = throwOnCaptiveNetwork;
 
-            if (customSSLVerification) client.SetHostnameVerifier(new HostnameVerifier());
+			//if (customSSLVerification) client.SetHostnameVerifier(new HostnameVerifier());
             noCacheCacheControl = (new CacheControl.Builder()).NoCache().Build();
         }
 
@@ -120,7 +120,7 @@ namespace ModernHttpClient
             try {
                 resp = await call.EnqueueAsync().ConfigureAwait(false);
                 var newReq = resp.Request();
-                var newUri = newReq == null ? null : newReq.Uri();
+				var newUri = newReq == null ? null : newReq.Url ().Uri ();
                 request.RequestUri = new Uri(newUri.ToString());
                 if (throwOnCaptiveNetwork && newUri != null) {
                     if (url.Host != newUri.Host) {
@@ -165,7 +165,7 @@ namespace ModernHttpClient
 
     public static class AwaitableOkHttp
     {
-        public static Task<Response> EnqueueAsync(this Call This)
+		public static Task<Response> EnqueueAsync(this ICall This)
         {
             var cb = new OkTaskCallback();
             This.Enqueue(cb);
@@ -178,21 +178,26 @@ namespace ModernHttpClient
             readonly TaskCompletionSource<Response> tcs = new TaskCompletionSource<Response>();
             public Task<Response> Task { get { return tcs.Task; } }
 
-            public void OnFailure(Request p0, Java.IO.IOException p1)
-            {
-                // Kind of a hack, but the simplest way to find out that server cert. validation failed
-                if (p1.Message == String.Format("Hostname '{0}' was not verified", p0.Url().Host)) {
-                    tcs.TrySetException(new WebException(p1.LocalizedMessage, WebExceptionStatus.TrustFailure));
-                } else {
-                    tcs.TrySetException(p1);
-                }
-            }
+			public void OnFailure (ICall call, IOException iOException)
+			{
+				// Kind of a hack, but the simplest way to find out that server cert. validation failed
+				if (iOException.Message == string.Format ("Hostname was not verified")) {
+					tcs.TrySetException (new WebException (iOException.LocalizedMessage, WebExceptionStatus.TrustFailure));
+				} else {
+					tcs.TrySetException (iOException);
+				}
+			}
 
             public void OnResponse(Response p0)
             {
-                tcs.TrySetResult(p0);
+                tcs.TrySetResult (p0);
             }
-        }
+
+			public void OnResponse (ICall call, Response response)
+			{
+				tcs.TrySetResult (response);
+			}
+		}
     }
 
     class HostnameVerifier : Java.Lang.Object, IHostnameVerifier

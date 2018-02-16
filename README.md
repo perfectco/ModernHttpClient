@@ -24,15 +24,26 @@ var httpClient = new HttpClient(new NativeMessageHandler());
 Just reference the Portable version of ModernHttpClient in your Portable
 Library, and it will use the correct version on all platforms.
 
-## Building
+## How to build and update Nuget package
 
-```sh
-make
+Currently there is no CI set up for this pacakge, it's all done by hand.
+There are a few bits of software required to build Nuget packages from terminal on the Mac:
+Visual Studio Core (includes the Nuget software)
+Powershell (for building the iFit.Analytics source)
+
+There is a handy powershell script included in this repo that can be used to create the nuget package:
+1. Update the version number in ModernHttpClient.nuspec
+2. Open ModernHttpClient.sln in Visual Studio and update the software version numbers.
+3. In terminal, navigate to the ModernHttpClient directory.
+4. Run the following commands:
+to start powershell:
 ```
-
-## Why doesn't this build in Xamarin Studio? What gives?
-
-```sh
-## Run this first
-make
+pwsh
 ```
+from the powershell prompt:
+```
+./buildNuget.ps1
+```
+5. This will create iFit.ModernHttpClient.version.nupkg in the ModernHttpClient directory.
+6. You can add this directory as a Nuget stream in Visual Studio if you'd like to test the package before uploading it.
+7. Upload the .nupkg to the iFit myget.org private nuget stream.

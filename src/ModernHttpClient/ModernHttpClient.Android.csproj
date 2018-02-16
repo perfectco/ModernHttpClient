@@ -16,6 +16,7 @@
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
     <AssemblyName>ModernHttpClient</AssemblyName>
     <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <AndroidTlsProvider></AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +40,16 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AutomatedTest|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\AutomatedTest</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>ModernHttpClient.Android</AssemblyName>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -55,16 +66,19 @@
     <Compile Include="Utility.cs" />
     <Compile Include="CaptiveNetworkException.cs" />
     <Compile Include="Android\NativeCookieHandler.cs" />
-    <Reference Include="Square.OkIO">
-      <HintPath>..\..\packages\Square.OkIO.1.5.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
-    </Reference>
     <None Include="packages.config" />
-    <Reference Include="Square.OkHttp">
-      <HintPath>..\..\packages\Square.OkHttp.2.4.0.3\lib\MonoAndroid\Square.OkHttp.dll</HintPath>
+    <Reference Include="Square.OkHttp3">
+      <HintPath>\tmp\nuget\Square.OkHttp3.3.4.1.1\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
+    </Reference>
+    <Reference Include="Square.OkIO">
+      <HintPath>\tmp\nuget\Square.OkIO.1.10.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Android\Properties\" />
+    <ProjectReference Include="ModernHttpClient.Portable.csproj">
+      <Project>{6DD98593-4498-463D-B16E-F6CC5A928B79}</Project>
+      <Name>ModernHttpClient.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
