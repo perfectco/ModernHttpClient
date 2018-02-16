@@ -6,3 +6,7 @@ build/
 build/
 *.xam
 packages
+
+*.csproj.user
+/.vs*
+/.idea*
