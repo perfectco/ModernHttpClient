@@ -23,8 +23,8 @@ namespace ModernHttpClient
 
         readonly Dictionary<HttpRequestMessage, WeakReference> registeredProgressCallbacks =
             new Dictionary<HttpRequestMessage, WeakReference>();
-        readonly Dictionary<string, string> headerSeparators = 
-            new Dictionary<string,string>(){ 
+        readonly Dictionary<string, string> headerSeparators =
+            new Dictionary<string,string>(){
                 {"User-Agent", " "}
             };
 
@@ -36,7 +36,7 @@ namespace ModernHttpClient
         {
             this.throwOnCaptiveNetwork = throwOnCaptiveNetwork;
 
-			//if (customSSLVerification) client.SetHostnameVerifier(new HostnameVerifier());
+            //if (customSSLVerification) client.SetHostnameVerifier(new HostnameVerifier());
             noCacheCacheControl = (new CacheControl.Builder()).NoCache().Build();
         }
 
@@ -120,7 +120,7 @@ namespace ModernHttpClient
             try {
                 resp = await call.EnqueueAsync().ConfigureAwait(false);
                 var newReq = resp.Request();
-				var newUri = newReq == null ? null : newReq.Url ().Uri ();
+                var newUri = newReq == null ? null : newReq.Url ().Uri ();
                 request.RequestUri = new Uri(newUri.ToString());
                 if (throwOnCaptiveNetwork && newUri != null) {
                     if (url.Host != newUri.Host) {
@@ -129,7 +129,7 @@ namespace ModernHttpClient
                 }
             } catch (IOException ex) {
                 if (ex.Message.ToLowerInvariant().Contains("canceled")) {
-                    throw new OperationCanceledException();
+                    throw new System.OperationCanceledException();
                 }
 
                 throw;
@@ -165,7 +165,7 @@ namespace ModernHttpClient
 
     public static class AwaitableOkHttp
     {
-		public static Task<Response> EnqueueAsync(this ICall This)
+        public static Task<Response> EnqueueAsync(this ICall This)
         {
             var cb = new OkTaskCallback();
             This.Enqueue(cb);
@@ -178,26 +178,26 @@ namespace ModernHttpClient
             readonly TaskCompletionSource<Response> tcs = new TaskCompletionSource<Response>();
             public Task<Response> Task { get { return tcs.Task; } }
 
-			public void OnFailure (ICall call, IOException iOException)
-			{
-				// Kind of a hack, but the simplest way to find out that server cert. validation failed
-				if (iOException.Message == string.Format ("Hostname was not verified")) {
-					tcs.TrySetException (new WebException (iOException.LocalizedMessage, WebExceptionStatus.TrustFailure));
-				} else {
-					tcs.TrySetException (iOException);
-				}
-			}
+            public void OnFailure (ICall call, IOException iOException)
+            {
+                // Kind of a hack, but the simplest way to find out that server cert. validation failed
+                if (iOException.Message == string.Format ("Hostname was not verified")) {
+                    tcs.TrySetException (new WebException (iOException.LocalizedMessage, WebExceptionStatus.TrustFailure));
+                } else {
+                    tcs.TrySetException (iOException);
+                }
+            }
 
             public void OnResponse(Response p0)
             {
                 tcs.TrySetResult (p0);
             }
 
-			public void OnResponse (ICall call, Response response)
-			{
-				tcs.TrySetResult (response);
-			}
-		}
+            public void OnResponse (ICall call, Response response)
+            {
+                tcs.TrySetResult (response);
+            }
+        }
     }
 
     class HostnameVerifier : Java.Lang.Object, IHostnameVerifier
@@ -232,12 +232,12 @@ namespace ModernHttpClient
             if (certificates == null || certificates.Length == 0) {//no cert at all
                 errors = System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable;
                 goto bail;
-            } 
+            }
 
             if (certificates.Length == 1) {//no root?
                 errors = System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors;
                 goto bail;
-            } 
+            }
 
             var netCerts = certificates.Select(x => new X509Certificate2(x.GetEncoded())).ToArray();
 
