@@ -151,11 +151,16 @@ namespace ModernHttpClient
             } else {
                 ret.Content = new ByteArrayContent (new byte [0]);
             }
-            var respHeaders = resp.Headers ();
-            foreach (var k in respHeaders.Names ()) {
-                ret.Headers.TryAddWithoutValidation (k, respHeaders.Get (k));
-                ret.Content.Headers.TryAddWithoutValidation (k, respHeaders.Get (k));
+
+            // It is possible to receive multiple headers with the same name. For example, Set-Cookie. Need to add all of them. 
+            var headersMapped = resp.Headers().ToMultimap(); // returns a map keyed by header name and all the mathcing values https://square.github.io/okhttp/2.x/okhttp/com/squareup/okhttp/Headers.html 
+            foreach (var keyValues in headersMapped) {
+                keyValues.Value.ToList ().ForEach (kval => {
+                    ret.Headers.TryAddWithoutValidation (keyValues.Key, kval);
+                    ret.Content.Headers.TryAddWithoutValidation (keyValues.Key, kval);
+                });
             }
+
             return ret;
         }
     }
