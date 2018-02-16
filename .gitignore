@@ -19,7 +19,7 @@ Makefile.in
 *.usertasks
 config.log
 config.make
-
+.idea/
 *.csproj.user
 /.vs*
 /.idea*
