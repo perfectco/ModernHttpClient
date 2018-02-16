@@ -34,8 +34,8 @@ namespace Playground.iOS
             //This API is only available in Mono and Xamarin products.
             //You can filter and/or re-order the ciphers suites that the SSL/TLS server will accept from a client.
             //The following example removes weak (export) ciphers from the list that will be offered to the server.
-            ServicePointManager.ClientCipherSuitesCallback += (protocol, allCiphers) =>
-                allCiphers.Where(x => !x.Contains("EXPORT")).ToList();
+            //ServicePointManager.ClientCipherSuitesCallback += (protocol, allCiphers) =>
+             //   allCiphers.Where(x => !x.Contains("EXPORT")).ToList();
 
             //Here we accept any certificate and just print the cert's data.
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => {
@@ -81,7 +81,8 @@ namespace Playground.iOS
             st.Start();
             try {
                 handler.DisableCaching = true;
-                var url = "https://github.com/paulcbetts/ModernHttpClient/releases/download/0.9.0/ModernHttpClient-0.9.zip";
+                // var url = "https://github.com/paulcbetts/ModernHttpClient/releases/download/0.9.0/ModernHttpClient-0.9.zip";
+                var url = "https://app.ibodyshop.com";
              
 
                 var request = new HttpRequestMessage(HttpMethod.Get, url);

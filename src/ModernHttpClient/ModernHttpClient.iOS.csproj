@@ -45,13 +45,12 @@
     </CustomCommands>
     <DefineConstants>UIKIT</DefineConstants>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
+    <Reference Include="Xamarin.iOS" />
     <Reference Include="System.Net.Http" />
     <Compile Include="iOS\NSUrlSessionHandler.cs" />
     <Compile Include="iOS\AsyncLock.cs" />

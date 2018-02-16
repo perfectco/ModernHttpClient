@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernHttpClient.iOS", "src\ModernHttpClient\ModernHttpClient.iOS.csproj", "{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernHttpClient.Android", "src\ModernHttpClient\ModernHttpClient.Android.csproj", "{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.Android", "src\Playground.Android\Playground.Android.csproj", "{90F8D67C-8D81-4DCE-BAE7-1ABA136A4C60}"
@@ -12,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernHttpClient.Portable", "src\ModernHttpClient\ModernHttpClient.Portable.csproj", "{6DD98593-4498-463D-B16E-F6CC5A928B79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernHttpClient.iOS64", "src\ModernHttpClient\ModernHttpClient.iOS64.csproj", "{6941F069-AC02-40EE-BBF3-9FE3331030EF}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "ModernHttpClient.iOS", "src\ModernHttpClient\ModernHttpClient.iOS.csproj", "{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,22 +25,6 @@ Global
 		AppStore|iPhone = AppStore|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.AppStore|iPhone.Build.0 = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Release|iPhone.Build.0 = Release|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{0F2A1CC8-4168-4CB4-B334-28C28BA51ECB}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{2CE837CD-9B97-4058-9156-339697EEE228}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
 		{2CE837CD-9B97-4058-9156-339697EEE228}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
 		{2CE837CD-9B97-4058-9156-339697EEE228}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
@@ -121,12 +105,27 @@ Global
 		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.Release|iPhone.Build.0 = Release|Any CPU
 		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Release|iPhone.Build.0 = Release|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{BDCA2E4A-7E01-4C97-AF2D-11A9F60DBC86}.AppStore|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
-		$1.ResourceNamePolicy = FileFormatDefault
 		$0.TextStylePolicy = $2
 		$2.inheritsSet = null
 		$2.scope = text/x-csharp
@@ -147,13 +146,26 @@ Global
 		$3.SpacesBeforeBrackets = False
 		$3.AlignToFirstMethodDeclarationParameter = False
 		$3.AlignToFirstIndexerDeclarationParameter = False
-		$3.inheritsSet = Mono
-		$3.inheritsScope = text/x-csharp
 		$3.scope = text/x-csharp
+		$3.IndentSwitchSection = False
+		$3.NewLinesForBracesInProperties = False
+		$3.NewLinesForBracesInAccessors = False
+		$3.NewLinesForBracesInAnonymousMethods = False
+		$3.NewLinesForBracesInControlBlocks = False
+		$3.NewLinesForBracesInAnonymousTypes = False
+		$3.NewLinesForBracesInObjectCollectionArrayInitializers = False
+		$3.NewLinesForBracesInLambdaExpressionBody = False
+		$3.NewLineForElse = False
+		$3.NewLineForCatch = False
+		$3.NewLineForFinally = False
+		$3.NewLineForMembersInObjectInit = False
+		$3.NewLineForMembersInAnonymousTypes = False
+		$3.NewLineForClausesInQuery = False
+		$3.SpacingAfterMethodDeclarationName = True
+		$3.SpaceAfterMethodCallName = True
+		$3.SpaceBeforeOpenSquareBracket = True
 		$0.TextStylePolicy = $4
-		$4.FileWidth = 120
-		$4.inheritsSet = VisualStudio
-		$4.inheritsScope = text/plain
 		$4.scope = text/plain
+		$4.TabsToSpaces = True
 	EndGlobalSection
 EndGlobal
