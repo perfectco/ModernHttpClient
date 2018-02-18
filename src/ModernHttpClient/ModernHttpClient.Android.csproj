@@ -74,6 +74,9 @@
     <Reference Include="Square.OkHttp3">
       <HintPath>..\..\packages\Square.OkHttp3.3.8.1\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
     </Reference>
+    <Reference Include="Square.OkIO">
+      <HintPath>\tmp\nuget\Square.OkIO.1.10.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
+    </Reference>
     <Compile Include="Android\ImprovedSSLSocketFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
@@ -82,4 +85,10 @@
       <Name>ModernHttpClient.Portable</Name>
     </ProjectReference>
   </ItemGroup>
+    <ProjectReference Include="ModernHttpClient.Portable.csproj">
+      <Project>{6DD98593-4498-463D-B16E-F6CC5A928B79}</Project>
+      <Name>ModernHttpClient.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

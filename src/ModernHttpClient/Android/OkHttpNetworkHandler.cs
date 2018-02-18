@@ -19,8 +19,8 @@ namespace ModernHttpClient
 {
 	public class NativeMessageHandler : HttpClientHandler
 	{
-        readonly OkHttpClient client;
-        readonly CacheControl noCacheCacheControl;
+		readonly OkHttpClient client;
+		readonly CacheControl noCacheCacheControl;
 		readonly bool throwOnCaptiveNetwork;
 
 		readonly Dictionary<HttpRequestMessage, WeakReference> registeredProgressCallbacks =
