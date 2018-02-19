@@ -62,9 +62,9 @@
     <None Include="packages.config" />
     <Reference Include="Square.OkHttp3">
       <HintPath>..\..\packages\Square.OkHttp3.3.8.1\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
-    </Reference>     
-    </ItemGroup>
-    <ItemGroup>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Android\ImprovedSSLSocketFactory.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Android\OkHttpNetworkHandler.cs" />
@@ -82,6 +82,6 @@
       <Project>{6DD98593-4498-463D-B16E-F6CC5A928B79}</Project>
       <Name>ModernHttpClient.Portable</Name>
     </ProjectReference>
-    </ItemGroup>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
