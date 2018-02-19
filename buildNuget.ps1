@@ -7,5 +7,5 @@ mkdir -p ./build/Portable-Net45+WinRT45+WP8+WPA81
 move-item ./src/ModernHttpClient/bin/Release/Portable-Net45+WinRT45+WP8+WPA81/Modern* ./build/Portable-Net45+WinRT45+WP8+WPA81 -force
 
 rm *.nupkg
-nuget pack ModernHttpClient.nuspec -IncludeReferencedProjects -Prop Configuration=Release
+vendor\nuget\nuget pack ModernHttpClient.nuspec -IncludeReferencedProjects -Prop Configuration=Release
 # nuget push *.nupkg <apikey> -source https://www.myget.org/F/orbital-drop-bear/api/v3/ -NonInteractive

@@ -2,10 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <version>3.2.2</version>
-    <authors>Paul Betts</authors>
-    <owners>iFit</owners>
-    <owners>DnsTech</owners>
-    <owners>Julien Mialon</owners>
+    <authors>Paul Betts / iFit / Julien Mialon</authors>
+	<owners>DnsTech</owners>
     <licenseUrl>https://github.com/paulcbetts/ModernHttpClient/blob/master/COPYING</licenseUrl>
     <projectUrl>https://github.com/paulcbetts/ModernHttpClient</projectUrl>
     <id>DnsTech.ModernHttpClient</id>
