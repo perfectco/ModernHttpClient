@@ -56,6 +56,15 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Square.OkIO">
+      <HintPath>..\..\packages\Square.OkIO.1.13.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
+    </Reference>
+    <None Include="packages.config" />
+    <Reference Include="Square.OkHttp3">
+      <HintPath>..\..\packages\Square.OkHttp3.3.8.1\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
+    </Reference>     
+    </ItemGroup>
+    <ItemGroup>
     <Compile Include="Android\ImprovedSSLSocketFactory.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Android\OkHttpNetworkHandler.cs" />
@@ -67,28 +76,12 @@
     <Compile Include="Utility.cs" />
     <Compile Include="CaptiveNetworkException.cs" />
     <Compile Include="Android\NativeCookieHandler.cs" />
-    <Reference Include="Square.OkIO">
-      <HintPath>..\..\packages\Square.OkIO.1.13.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
-    </Reference>
-    <None Include="packages.config" />
-    <Reference Include="Square.OkHttp3">
-      <HintPath>..\..\packages\Square.OkHttp3.3.8.1\lib\MonoAndroid\Square.OkHttp3.dll</HintPath>
-    </Reference>
-    <Reference Include="Square.OkIO">
-      <HintPath>\tmp\nuget\Square.OkIO.1.10.0.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
-    </Reference>
-    <Compile Include="Android\ImprovedSSLSocketFactory.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ItemGroup>
     <ProjectReference Include="ModernHttpClient.Portable.csproj">
       <Project>{6DD98593-4498-463D-B16E-F6CC5A928B79}</Project>
       <Name>ModernHttpClient.Portable</Name>
     </ProjectReference>
-  </ItemGroup>
-    <ProjectReference Include="ModernHttpClient.Portable.csproj">
-      <Project>{6DD98593-4498-463D-B16E-F6CC5A928B79}</Project>
-      <Name>ModernHttpClient.Portable</Name>
-    </ProjectReference>
-  </ItemGroup>
+    </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

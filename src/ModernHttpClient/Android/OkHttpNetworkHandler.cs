@@ -199,7 +199,7 @@ namespace ModernHttpClient
 
 			public void OnFailure(ICall p0, IOException p1)
 			{
-// Kind of a hack, but the simplest way to find out that server cert. validation failed
+                // Kind of a hack, but the simplest way to find out that server cert. validation failed
 				if (p1.Message == string.Format("Hostname '{0}' was not verified", p0.Request().Url().Host()))
 				{
 					tcs.TrySetException(new WebException(p1.LocalizedMessage, WebExceptionStatus.TrustFailure));
@@ -208,11 +208,6 @@ namespace ModernHttpClient
 				{
 					tcs.TrySetException(p1);
 				}
-			}
-
-			public void OnResponse(ICall p0, Response p1)
-			{
-				tcs.TrySetResult(p1);
 			}
 
             public void OnResponse (ICall call, Response response)
