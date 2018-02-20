@@ -14,6 +14,7 @@ using System.Globalization;
 using Android.OS;
 using Java.Util.Concurrent;
 using Java.Interop;
+using Java.Net;
 
 namespace ModernHttpClient
 {
@@ -143,6 +144,22 @@ namespace ModernHttpClient
                 {
                     throw new CaptiveNetworkException(new Uri(java_uri), new Uri(newUri.ToString()));
                 }
+            }
+            catch(SSLException ex)
+            {
+                throw new WebException(ex.Message, ex, WebExceptionStatus.SecureChannelFailure, null);
+            }
+            catch(ConnectException ex)
+            {
+                throw new WebException(ex.Message, ex, WebExceptionStatus.ConnectFailure, null);
+            }
+            catch(SocketTimeoutException ex)
+            {
+                throw new WebException(ex.Message, ex, WebExceptionStatus.Timeout, null);
+            }
+            catch(UnknownHostException ex)
+            {
+                throw new WebException(ex.Message, ex, WebExceptionStatus.NameResolutionFailure, null);
             }
             catch (IOException ex)
             {

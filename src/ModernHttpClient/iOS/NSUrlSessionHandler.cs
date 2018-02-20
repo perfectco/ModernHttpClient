@@ -37,14 +37,14 @@ namespace ModernHttpClient
     {
         readonly NSUrlSession session;
 
-        readonly Dictionary<NSUrlSessionTask, InflightOperation> inflightRequests = 
+        readonly Dictionary<NSUrlSessionTask, InflightOperation> inflightRequests =
             new Dictionary<NSUrlSessionTask, InflightOperation>();
 
-        readonly Dictionary<HttpRequestMessage, ProgressDelegate> registeredProgressCallbacks = 
+        readonly Dictionary<HttpRequestMessage, ProgressDelegate> registeredProgressCallbacks =
             new Dictionary<HttpRequestMessage, ProgressDelegate>();
 
         readonly Dictionary<string, string> headerSeparators =
-            new Dictionary<string, string>(){ 
+            new Dictionary<string, string>(){
                 {"User-Agent", " "}
             };
 
@@ -65,9 +65,7 @@ namespace ModernHttpClient
                 configuration.TLSMinimumSupportedProtocol = minimumSSLProtocol.Value;
             }
 
-            session = NSUrlSession.FromConfiguration(
-                NSUrlSessionConfiguration.DefaultSessionConfiguration, 
-                new DataTaskDelegate(this), null);
+            session = NSUrlSession.FromConfiguration(NSUrlSessionConfiguration.DefaultSessionConfiguration, new DataTaskDelegate(this), null);
 
             this.throwOnCaptiveNetwork = throwOnCaptiveNetwork;
             this.customSSLVerification = customSSLVerification;
@@ -243,7 +241,7 @@ namespace ModernHttpClient
                 var data = getResponseForTask(dataTask);
                 var bytes = byteData.ToArray();
 
-                // NB: If we're cancelled, we still might have one more chunk 
+                // NB: If we're cancelled, we still might have one more chunk
                 // of data that attempts to be delivered
                 if (data.IsCompleted) return;
 
@@ -261,7 +259,7 @@ namespace ModernHttpClient
 
             public override void DidReceiveChallenge(NSUrlSession session, NSUrlSessionTask task, NSUrlAuthenticationChallenge challenge, Action<NSUrlSessionAuthChallengeDisposition, NSUrlCredential> completionHandler)
             {
-               
+
 
                 if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodNTLM) {
                     NetworkCredential credentialsToUse;
@@ -291,14 +289,14 @@ namespace ModernHttpClient
                     goto doDefault;
                 }
 
-                // Convert Mono Certificates to .NET certificates and build cert 
+                // Convert Mono Certificates to .NET certificates and build cert
                 // chain from root certificate
                 var serverCertChain = challenge.ProtectionSpace.ServerSecTrust;
                 var chain = new X509Chain();
                 X509Certificate2 root = null;
                 var errors = SslPolicyErrors.None;
 
-                if (serverCertChain == null || serverCertChain.Count == 0) { 
+                if (serverCertChain == null || serverCertChain.Count == 0) {
                     errors = SslPolicyErrors.RemoteCertificateNotAvailable;
                     goto sslErrorVerify;
                 }
@@ -448,7 +446,7 @@ namespace ModernHttpClient
                     }
 
                     goto done;
-                } 
+                }
 
                 if (error.Domain == CFNetworkError.ErrorDomain) {
                     // Convert the error code into an enumeration (this is future
@@ -580,7 +578,7 @@ namespace ModernHttpClient
             }
         }
     }
-            
+
     class ByteArrayListStream : Stream
     {
         Exception exception;
@@ -609,7 +607,7 @@ namespace ModernHttpClient
         public override void Flush() { }
 
         public override long Seek(long offset, SeekOrigin origin)
-        { 
+        {
             throw new NotSupportedException();
         }
 
@@ -695,7 +693,7 @@ namespace ModernHttpClient
             }
 
             // If we're at the end of the stream and it's not done, prepare
-            // the next read to park itself unless AddByteArray or Complete 
+            // the next read to park itself unless AddByteArray or Complete
             // posts
             if (position >= maxLength && !isCompleted) {
                 lockRelease = await readStreamLock.LockAsync().ConfigureAwait(false);
@@ -719,15 +717,15 @@ namespace ModernHttpClient
             }
 
             if (isCompleted && position < maxLength) {
-                // NB: This solves a rare deadlock 
+                // NB: This solves a rare deadlock
                 //
                 // 1. ReadAsync called (waiting for lock release)
                 // 2. AddByteArray called (release lock)
                 // 3. AddByteArray called (release lock)
                 // 4. Complete called (release lock the last time)
-                // 5. ReadAsync called (lock released at this point, the method completed successfully) 
+                // 5. ReadAsync called (lock released at this point, the method completed successfully)
                 // 6. ReadAsync called (deadlock on LockAsync(), because the lock is block, and there is no way to release it)
-                // 
+                //
                 // Current condition forces the lock to be released in the end of 5th point
 
                 Interlocked.Exchange(ref lockRelease, EmptyDisposable.Instance).Dispose();
