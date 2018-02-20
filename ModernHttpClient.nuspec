@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <version>3.2.2</version>
-    <authors>Paul Betts</authors>
-    <owners>iFit</owners>
-    <owners>DnsTech</owners>
-    <owners>Julien Mialon</owners>
+    <version>3.3.0</version>
+    <authors>Paul Betts / iFit / Julien Mialon</authors>
+	<owners>DnsTech</owners>
     <licenseUrl>https://github.com/paulcbetts/ModernHttpClient/blob/master/COPYING</licenseUrl>
     <projectUrl>https://github.com/paulcbetts/ModernHttpClient</projectUrl>
     <id>DnsTech.ModernHttpClient</id>
@@ -22,6 +20,15 @@
   </metadata>
 
   <files>
-    <file src="build/**/*.*" target="lib" />
+	<file src="build\Xamarin.iOS10\ModernHttpClient.dll" target="lib\Xamarin.iOS10" />
+	<file src="build\Xamarin.iOS10\ModernHttpClient.pdb" target="lib\Xamarin.iOS10" />
+	
+	<file src="build\MonoAndroid\ModernHttpClient.dll" target="lib\MonoAndroid" />
+	<file src="build\MonoAndroid\ModernHttpClient.dll.mdb" target="lib\MonoAndroid" />
+	<file src="build\MonoAndroid\ModernHttpClient.pdb" target="lib\MonoAndroid" />
+	
+	<file src="build\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll" target="lib\Portable-Net45+WinRT45+WP8+WPA81" />
+	<file src="build\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.pdb" target="lib\Portable-Net45+WinRT45+WP8+WPA81" />
+	
   </files>
 </package>

@@ -9,7 +9,6 @@ using ModernHttpClient;
 using System.Text;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Net;
 using System.Linq;
 
@@ -81,7 +80,8 @@ namespace Playground.iOS
             st.Start();
             try {
                 handler.DisableCaching = true;
-                var url = "https://github.com/paulcbetts/ModernHttpClient/releases/download/0.9.0/ModernHttpClient-0.9.zip";
+                // var url = "https://github.com/paulcbetts/ModernHttpClient/releases/download/0.9.0/ModernHttpClient-0.9.zip";
+                var url = "https://app.ibodyshop.com";
              
 
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
