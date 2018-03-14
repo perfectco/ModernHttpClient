@@ -312,40 +312,31 @@ namespace ModernHttpClient
                     return;
                 }
 
-                if (!This.customSSLVerification) {
-                    goto doDefault;
-                }
-
                 // https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/URLLoadingSystem/Articles/AuthenticationChallenges.html\
                 // For Client Certificate,  
                 //      http://stackoverflow.com/questions/21537203/ios-nsurlauthenticationmethodclientcertificate-not-requested-vs-activesync-serve
                 //      http://www.sunethmendis.com/2013/01/11/certificate-based-client-authentication-in-ios/
                 //      https://forums.xamarin.com/discussion/39535/didreceivechallenge-issue-with-x509-certificates
-                switch (challenge.ProtectionSpace.AuthenticationMethod)
-                {
-                    case "NSURLAuthenticationMethodServerTrust":
-                        goto serverTrust;
-                    case "NSURLAuthenticationMethodClientCertificate":
-                        goto clientCert;
-                    case "NSURLAuthenticationMethodHTTPBasic":
-                    case "NSURLAuthenticationMethodHTTPDigest":
-                    case "NSURLAuthenticationMethodNTLM":
-                    default:
-                        goto doDefault;
+                if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodClientCertificate) {
+                    if (_credential != null) {
+#if UNIFIED
+                        challenge.Sender.UseCredential(_credential, challenge);
+#else
+                        challenge.Sender.UseCredentials(_credential, challenge);
+#endif
+                        completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, _credential);
+                        return;
+                    }
                 }
 
-            clientCert:
-                if (_credential == null)
+                if (!This.customSSLVerification) {
                     goto doDefault;
+                }
 
-#if UNIFIED
-                challenge.Sender.UseCredential(_credential, challenge);
-#else
-                challenge.Sender.UseCredentials(_credential, challenge);
-#endif
-                goto doDefault;
+                if (challenge.ProtectionSpace.AuthenticationMethod != NSUrlProtectionSpace.AuthenticationMethodServerTrust) {
+                    goto doDefault;
+                }
 
-            serverTrust:
                 if (ServicePointManager.ServerCertificateValidationCallback == null) {
                     goto doDefault;
                 }
