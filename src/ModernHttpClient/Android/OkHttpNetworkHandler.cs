@@ -16,6 +16,11 @@ using Java.Util.Concurrent;
 using Java.Interop;
 using Java.Net;
 
+// See http://chariotsolutions.com/blog/post/https-with-client-certificates-on/
+// for clue on Android client certs http://square.github.io/okhttp/javadoc/com/squareup/okhttp/CertificatePinner.html
+using Java.Security;
+
+
 namespace ModernHttpClient
 {
     public class NativeMessageHandler : HttpClientHandler
@@ -39,7 +44,7 @@ namespace ModernHttpClient
 
         public NativeMessageHandler(int connectTimeout, int readTimeout, int writeTimeout) : this(false, false, connectTimeout, readTimeout, writeTimeout) { }
 
-        public NativeMessageHandler(bool throwOnCaptiveNetwork, bool customSSLVerification, int connectTimeout = 10_000, int readTimeout = 10_000, int writeTimeout = 10_000, NativeCookieHandler cookieHandler = null)
+        public NativeMessageHandler(bool throwOnCaptiveNetwork, bool customSSLVerification, int connectTimeout = 10_000, int readTimeout = 10_000, int writeTimeout = 10_000, NativeCookieHandler cookieHandler = null, byte[] pfxData = null, string pfxPassword = null)
         {
             var builder = new OkHttpClient.Builder();
 
@@ -56,8 +61,28 @@ namespace ModernHttpClient
 
             builder.EnableTls12OnPreLollipopDevices();
 
+            if (pfxData != null && pfxData.Length > 0) {
+                var sslSocketFactory = createSSLSocketFactory(pfxData, pfxPassword);
+                builder.SslSocketFactory(sslSocketFactory);
+            }
+
             client = builder.Build();
             noCacheCacheControl = (new CacheControl.Builder()).NoCache().Build();
+        }
+
+        private SSLSocketFactory createSSLSocketFactory(byte[] pfxData, string pfxPassword)
+        {
+            var stream = new System.IO.MemoryStream(pfxData);     
+            KeyStore keyStore = KeyStore.GetInstance("PKCS12");
+            keyStore.Load(stream, pfxPassword.ToCharArray());
+
+            KeyManagerFactory kmf = KeyManagerFactory.GetInstance("X509");
+            kmf.Init(keyStore, pfxPassword.ToCharArray());
+            IKeyManager[] keyManagers = kmf.GetKeyManagers();
+
+            SSLContext sslContext = SSLContext.GetInstance("TLS");
+            sslContext.Init(keyManagers, null, null);
+            return sslContext.SocketFactory;
         }
 
         public void RegisterForProgress(HttpRequestMessage request, ProgressDelegate callback)

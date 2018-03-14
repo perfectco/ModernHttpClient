@@ -49,3 +49,6 @@ Thumbs.db
 *.orig
 
 *.bak
+*.xam
+
+vendor/
