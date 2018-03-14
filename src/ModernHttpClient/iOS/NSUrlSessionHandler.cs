@@ -319,11 +319,6 @@ namespace ModernHttpClient
                 //      https://forums.xamarin.com/discussion/39535/didreceivechallenge-issue-with-x509-certificates
                 if (challenge.ProtectionSpace.AuthenticationMethod == NSUrlProtectionSpace.AuthenticationMethodClientCertificate) {
                     if (_credential != null) {
-#if UNIFIED
-                        challenge.Sender.UseCredential(_credential, challenge);
-#else
-                        challenge.Sender.UseCredentials(_credential, challenge);
-#endif
                         completionHandler(NSUrlSessionAuthChallengeDisposition.UseCredential, _credential);
                         return;
                     }
