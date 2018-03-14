@@ -40,11 +40,9 @@ namespace ModernHttpClient
 
         public bool DisableCaching { get; set; }
 
-        public NativeMessageHandler() : this(false, false) { }
-
         public NativeMessageHandler(int connectTimeout, int readTimeout, int writeTimeout) : this(false, false, connectTimeout, readTimeout, writeTimeout) { }
 
-        public NativeMessageHandler(bool throwOnCaptiveNetwork, bool customSSLVerification, int connectTimeout = 10_000, int readTimeout = 10_000, int writeTimeout = 10_000, NativeCookieHandler cookieHandler = null, byte[] pfxData = null, string pfxPassword = null)
+        public NativeMessageHandler(bool throwOnCaptiveNetwork = false, bool customSSLVerification = false, int connectTimeout = 10_000, int readTimeout = 10_000, int writeTimeout = 10_000, NativeCookieHandler cookieHandler = null, byte[] pfxData = null, string pfxPassword = null)
         {
             var builder = new OkHttpClient.Builder();
 

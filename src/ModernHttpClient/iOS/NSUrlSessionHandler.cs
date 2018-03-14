@@ -54,8 +54,7 @@ namespace ModernHttpClient
 
         public bool DisableCaching { get; set; }
 
-        public NativeMessageHandler(): this(false, false) { }
-        public NativeMessageHandler(bool throwOnCaptiveNetwork, bool customSSLVerification, NativeCookieHandler cookieHandler = null, SslProtocol? minimumSSLProtocol = null, byte[] pfxData = null, string pfxPassword = null)
+        public NativeMessageHandler(bool throwOnCaptiveNetwork = false, bool customSSLVerification = false, NativeCookieHandler cookieHandler = null, SslProtocol? minimumSSLProtocol = null, byte[] pfxData = null, string pfxPassword = null)
         {
             var configuration = NSUrlSessionConfiguration.DefaultSessionConfiguration;
 
