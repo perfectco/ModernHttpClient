@@ -50,9 +50,11 @@ namespace ModernHttpClient
             };
 
         readonly bool throwOnCaptiveNetwork;
-        readonly bool customSSLVerification;
+        public bool CustomSSLVerification { get; set; }
 
         public bool DisableCaching { get; set; }
+
+        readonly DataTaskDelegate dataTaskDelegate;
 
         public NativeMessageHandler(bool throwOnCaptiveNetwork = false, bool customSSLVerification = false, NativeCookieHandler cookieHandler = null, SslProtocol? minimumSSLProtocol = null, byte[] pfxData = null, string pfxPassword = null)
         {
@@ -65,10 +67,11 @@ namespace ModernHttpClient
                 configuration.TLSMinimumSupportedProtocol = minimumSSLProtocol.Value;
             }
 
-            session = NSUrlSession.FromConfiguration(NSUrlSessionConfiguration.DefaultSessionConfiguration, new DataTaskDelegate(this, pfxData, pfxPassword), null);
+            dataTaskDelegate = new DataTaskDelegate(this, pfxData, pfxPassword);
+            session = NSUrlSession.FromConfiguration(NSUrlSessionConfiguration.DefaultSessionConfiguration, dataTaskDelegate, null);
 
             this.throwOnCaptiveNetwork = throwOnCaptiveNetwork;
-            this.customSSLVerification = customSSLVerification;
+            this.CustomSSLVerification = customSSLVerification;
 
             this.DisableCaching = false;
         }
@@ -80,6 +83,11 @@ namespace ModernHttpClient
             }
 
             return ",";
+        }
+
+        public void SetClientCert(byte[] pfxData, string password)
+        {
+            dataTaskDelegate.SetCredential(pfxData, password);
         }
 
         public void RegisterForProgress(HttpRequestMessage request, ProgressDelegate callback)
@@ -156,11 +164,7 @@ namespace ModernHttpClient
             public DataTaskDelegate(NativeMessageHandler that, byte[] pfxData = null, string pfxPassword = null)
             {
                 this.This = that;
-
-                if (pfxData != null)
-                {
-                    _credential = exportCredential(pfxData, pfxPassword);
-                }
+                SetCredential(pfxData, pfxPassword);
             }
 
             public override void DidReceiveResponse(NSUrlSession session, NSUrlSessionDataTask dataTask, NSUrlResponse response, Action<NSUrlSessionResponseDisposition> completionHandler)
@@ -263,6 +267,12 @@ namespace ModernHttpClient
 
             static readonly Regex cnRegex = new Regex(@"CN\s*=\s*([^,]*)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
+            public void SetCredential(byte[] pfxData, string pfxPassword) {
+                if (pfxData != null) {
+                    _credential = exportCredential(pfxData, pfxPassword);
+                }
+            }
+
             private static NSUrlCredential exportCredential(byte[] pfxData, string password = null)
             {
                 NSDictionary[] items;
@@ -324,7 +334,7 @@ namespace ModernHttpClient
                     }
                 }
 
-                if (!This.customSSLVerification) {
+                if (!This.CustomSSLVerification) {
                     goto doDefault;
                 }
 
