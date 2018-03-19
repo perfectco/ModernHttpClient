@@ -85,9 +85,9 @@ namespace ModernHttpClient
             return ",";
         }
 
-        public void SetClientCert(byte[] pfxData, string password)
+        public bool SetClientCert(byte[] pfxData, string password)
         {
-            dataTaskDelegate.SetCredential(pfxData, password);
+            return dataTaskDelegate.SetCredential(pfxData, password);
         }
 
         public void RegisterForProgress(HttpRequestMessage request, ProgressDelegate callback)
@@ -267,10 +267,12 @@ namespace ModernHttpClient
 
             static readonly Regex cnRegex = new Regex(@"CN\s*=\s*([^,]*)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
 
-            public void SetCredential(byte[] pfxData, string pfxPassword) {
+            public bool SetCredential(byte[] pfxData, string pfxPassword) {
                 if (pfxData != null) {
                     _credential = exportCredential(pfxData, pfxPassword);
+                    return _credential != null;
                 }
+                return false;
             }
 
             private static NSUrlCredential exportCredential(byte[] pfxData, string password = null)
