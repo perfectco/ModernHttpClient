@@ -360,11 +360,6 @@ namespace ModernHttpClient
                     goto sslErrorVerify;
                 }
 
-                if (serverCertChain.Count == 1) {
-                    errors = SslPolicyErrors.RemoteCertificateChainErrors;
-                    goto sslErrorVerify;
-                }
-
                 var netCerts = Enumerable.Range(0, serverCertChain.Count)
                     .Select(x => serverCertChain[x].ToX509Certificate2())
                     .ToArray();
